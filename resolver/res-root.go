@@ -5,10 +5,10 @@ import "test/graph"
 type Root struct{}
 
 func (Root) Query() graph.QueryResolver {
-	panic("implement me")
+	return query{}
 }
 
 func (Root) Repository() graph.RepositoryResolver {
-	panic("implement me")
+	return repository{}
 }
 

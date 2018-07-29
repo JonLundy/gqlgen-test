@@ -31,29 +31,11 @@ type Resolvers interface {
 
 	Repository_allBugs(ctx context.Context, obj *model.Repository, input model.ConnectionInput) (model.BugConnection, error)
 	Repository_bug(ctx context.Context, obj *model.Repository, prefix string) (*model.Bug, error)
-
-	__Directive_args(ctx context.Context, obj *introspection.Directive) ([]introspection.InputValue, error)
-
-	__Field_args(ctx context.Context, obj *introspection.Field) ([]introspection.InputValue, error)
-
-	__Schema_types(ctx context.Context, obj *introspection.Schema) ([]introspection.Type, error)
-
-	__Schema_directives(ctx context.Context, obj *introspection.Schema) ([]introspection.Directive, error)
-
-	__Type_fields(ctx context.Context, obj *introspection.Type, includeDeprecated bool) ([]introspection.Field, error)
-	__Type_interfaces(ctx context.Context, obj *introspection.Type) ([]introspection.Type, error)
-	__Type_possibleTypes(ctx context.Context, obj *introspection.Type) ([]introspection.Type, error)
-	__Type_enumValues(ctx context.Context, obj *introspection.Type, includeDeprecated bool) ([]introspection.EnumValue, error)
-	__Type_inputFields(ctx context.Context, obj *introspection.Type) ([]introspection.InputValue, error)
 }
 
 type ResolverRoot interface {
 	Query() QueryResolver
 	Repository() RepositoryResolver
-	__Directive() __DirectiveResolver
-	__Field() __FieldResolver
-	__Schema() __SchemaResolver
-	__Type() __TypeResolver
 }
 type QueryResolver interface {
 	DefaultRepository(ctx context.Context) (*model.Repository, error)
