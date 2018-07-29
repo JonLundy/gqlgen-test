@@ -7,6 +7,7 @@ import (
 	context "context"
 	fmt "fmt"
 	strconv "strconv"
+	model "test/model"
 
 	graphql "github.com/vektah/gqlgen/graphql"
 	introspection "github.com/vektah/gqlgen/neelance/introspection"
@@ -25,11 +26,11 @@ func NewExecutableSchema(resolvers ResolverRoot) graphql.ExecutableSchema {
 }
 
 type Resolvers interface {
-	Query_defaultRepository(ctx context.Context) (*Repository, error)
-	Query_repository(ctx context.Context, id string) (*Repository, error)
+	Query_defaultRepository(ctx context.Context) (*model.Repository, error)
+	Query_repository(ctx context.Context, id string) (*model.Repository, error)
 
-	Repository_allBugs(ctx context.Context, obj *Repository, input ConnectionInput) (BugConnection, error)
-	Repository_bug(ctx context.Context, obj *Repository, prefix string) (*Bug, error)
+	Repository_allBugs(ctx context.Context, obj *model.Repository, input model.ConnectionInput) (model.BugConnection, error)
+	Repository_bug(ctx context.Context, obj *model.Repository, prefix string) (*model.Bug, error)
 
 	__Directive_args(ctx context.Context, obj *introspection.Directive) ([]introspection.InputValue, error)
 
@@ -55,12 +56,12 @@ type ResolverRoot interface {
 	__Type() __TypeResolver
 }
 type QueryResolver interface {
-	DefaultRepository(ctx context.Context) (*Repository, error)
-	Repository(ctx context.Context, id string) (*Repository, error)
+	DefaultRepository(ctx context.Context) (*model.Repository, error)
+	Repository(ctx context.Context, id string) (*model.Repository, error)
 }
 type RepositoryResolver interface {
-	AllBugs(ctx context.Context, obj *Repository, input ConnectionInput) (BugConnection, error)
-	Bug(ctx context.Context, obj *Repository, prefix string) (*Bug, error)
+	AllBugs(ctx context.Context, obj *model.Repository, input model.ConnectionInput) (model.BugConnection, error)
+	Bug(ctx context.Context, obj *model.Repository, prefix string) (*model.Bug, error)
 }
 type __DirectiveResolver interface {
 	Args(ctx context.Context, obj *introspection.Directive) ([]introspection.InputValue, error)
@@ -85,19 +86,19 @@ type shortMapper struct {
 	r ResolverRoot
 }
 
-func (s shortMapper) Query_defaultRepository(ctx context.Context) (*Repository, error) {
+func (s shortMapper) Query_defaultRepository(ctx context.Context) (*model.Repository, error) {
 	return s.r.Query().DefaultRepository(ctx)
 }
 
-func (s shortMapper) Query_repository(ctx context.Context, id string) (*Repository, error) {
+func (s shortMapper) Query_repository(ctx context.Context, id string) (*model.Repository, error) {
 	return s.r.Query().Repository(ctx, id)
 }
 
-func (s shortMapper) Repository_allBugs(ctx context.Context, obj *Repository, input ConnectionInput) (BugConnection, error) {
+func (s shortMapper) Repository_allBugs(ctx context.Context, obj *model.Repository, input model.ConnectionInput) (model.BugConnection, error) {
 	return s.r.Repository().AllBugs(ctx, obj, input)
 }
 
-func (s shortMapper) Repository_bug(ctx context.Context, obj *Repository, prefix string) (*Bug, error) {
+func (s shortMapper) Repository_bug(ctx context.Context, obj *model.Repository, prefix string) (*model.Bug, error) {
 	return s.r.Repository().Bug(ctx, obj, prefix)
 }
 
@@ -178,7 +179,7 @@ type executionContext struct {
 var addCommentOperationImplementors = []string{"AddCommentOperation", "Operation", "Authored"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _AddCommentOperation(ctx context.Context, sel []query.Selection, obj *AddCommentOperation) graphql.Marshaler {
+func (ec *executionContext) _AddCommentOperation(ctx context.Context, sel []query.Selection, obj *model.AddCommentOperation) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, addCommentOperationImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -202,7 +203,7 @@ func (ec *executionContext) _AddCommentOperation(ctx context.Context, sel []quer
 	return out
 }
 
-func (ec *executionContext) _AddCommentOperation_author(ctx context.Context, field graphql.CollectedField, obj *AddCommentOperation) graphql.Marshaler {
+func (ec *executionContext) _AddCommentOperation_author(ctx context.Context, field graphql.CollectedField, obj *model.AddCommentOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "AddCommentOperation"
 	rctx.Args = nil
@@ -213,7 +214,7 @@ func (ec *executionContext) _AddCommentOperation_author(ctx context.Context, fie
 	return ec._Person(ctx, field.Selections, &res)
 }
 
-func (ec *executionContext) _AddCommentOperation_date(ctx context.Context, field graphql.CollectedField, obj *AddCommentOperation) graphql.Marshaler {
+func (ec *executionContext) _AddCommentOperation_date(ctx context.Context, field graphql.CollectedField, obj *model.AddCommentOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "AddCommentOperation"
 	rctx.Args = nil
@@ -224,7 +225,7 @@ func (ec *executionContext) _AddCommentOperation_date(ctx context.Context, field
 	return graphql.MarshalTime(res)
 }
 
-func (ec *executionContext) _AddCommentOperation_message(ctx context.Context, field graphql.CollectedField, obj *AddCommentOperation) graphql.Marshaler {
+func (ec *executionContext) _AddCommentOperation_message(ctx context.Context, field graphql.CollectedField, obj *model.AddCommentOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "AddCommentOperation"
 	rctx.Args = nil
@@ -238,7 +239,7 @@ func (ec *executionContext) _AddCommentOperation_message(ctx context.Context, fi
 var bugImplementors = []string{"Bug"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _Bug(ctx context.Context, sel []query.Selection, obj *Bug) graphql.Marshaler {
+func (ec *executionContext) _Bug(ctx context.Context, sel []query.Selection, obj *model.Bug) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, bugImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -270,7 +271,7 @@ func (ec *executionContext) _Bug(ctx context.Context, sel []query.Selection, obj
 	return out
 }
 
-func (ec *executionContext) _Bug_id(ctx context.Context, field graphql.CollectedField, obj *Bug) graphql.Marshaler {
+func (ec *executionContext) _Bug_id(ctx context.Context, field graphql.CollectedField, obj *model.Bug) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "Bug"
 	rctx.Args = nil
@@ -281,7 +282,7 @@ func (ec *executionContext) _Bug_id(ctx context.Context, field graphql.Collected
 	return graphql.MarshalString(res)
 }
 
-func (ec *executionContext) _Bug_humanId(ctx context.Context, field graphql.CollectedField, obj *Bug) graphql.Marshaler {
+func (ec *executionContext) _Bug_humanId(ctx context.Context, field graphql.CollectedField, obj *model.Bug) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "Bug"
 	rctx.Args = nil
@@ -292,7 +293,7 @@ func (ec *executionContext) _Bug_humanId(ctx context.Context, field graphql.Coll
 	return graphql.MarshalString(res)
 }
 
-func (ec *executionContext) _Bug_title(ctx context.Context, field graphql.CollectedField, obj *Bug) graphql.Marshaler {
+func (ec *executionContext) _Bug_title(ctx context.Context, field graphql.CollectedField, obj *model.Bug) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "Bug"
 	rctx.Args = nil
@@ -303,7 +304,7 @@ func (ec *executionContext) _Bug_title(ctx context.Context, field graphql.Collec
 	return graphql.MarshalString(res)
 }
 
-func (ec *executionContext) _Bug_status(ctx context.Context, field graphql.CollectedField, obj *Bug) graphql.Marshaler {
+func (ec *executionContext) _Bug_status(ctx context.Context, field graphql.CollectedField, obj *model.Bug) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "Bug"
 	rctx.Args = nil
@@ -314,7 +315,7 @@ func (ec *executionContext) _Bug_status(ctx context.Context, field graphql.Colle
 	return res
 }
 
-func (ec *executionContext) _Bug_labels(ctx context.Context, field graphql.CollectedField, obj *Bug) graphql.Marshaler {
+func (ec *executionContext) _Bug_labels(ctx context.Context, field graphql.CollectedField, obj *model.Bug) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "Bug"
 	rctx.Args = nil
@@ -334,9 +335,9 @@ func (ec *executionContext) _Bug_labels(ctx context.Context, field graphql.Colle
 	return arr1
 }
 
-func (ec *executionContext) _Bug_comments(ctx context.Context, field graphql.CollectedField, obj *Bug) graphql.Marshaler {
+func (ec *executionContext) _Bug_comments(ctx context.Context, field graphql.CollectedField, obj *model.Bug) graphql.Marshaler {
 	args := map[string]interface{}{}
-	var arg0 ConnectionInput
+	var arg0 model.ConnectionInput
 	if tmp, ok := field.Args["input"]; ok {
 		var err error
 		arg0, err = UnmarshalConnectionInput(tmp)
@@ -356,9 +357,9 @@ func (ec *executionContext) _Bug_comments(ctx context.Context, field graphql.Col
 	return ec._CommentConnection(ctx, field.Selections, &res)
 }
 
-func (ec *executionContext) _Bug_operations(ctx context.Context, field graphql.CollectedField, obj *Bug) graphql.Marshaler {
+func (ec *executionContext) _Bug_operations(ctx context.Context, field graphql.CollectedField, obj *model.Bug) graphql.Marshaler {
 	args := map[string]interface{}{}
-	var arg0 ConnectionInput
+	var arg0 model.ConnectionInput
 	if tmp, ok := field.Args["input"]; ok {
 		var err error
 		arg0, err = UnmarshalConnectionInput(tmp)
@@ -381,7 +382,7 @@ func (ec *executionContext) _Bug_operations(ctx context.Context, field graphql.C
 var bugConnectionImplementors = []string{"BugConnection"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _BugConnection(ctx context.Context, sel []query.Selection, obj *BugConnection) graphql.Marshaler {
+func (ec *executionContext) _BugConnection(ctx context.Context, sel []query.Selection, obj *model.BugConnection) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, bugConnectionImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -405,7 +406,7 @@ func (ec *executionContext) _BugConnection(ctx context.Context, sel []query.Sele
 	return out
 }
 
-func (ec *executionContext) _BugConnection_edges(ctx context.Context, field graphql.CollectedField, obj *BugConnection) graphql.Marshaler {
+func (ec *executionContext) _BugConnection_edges(ctx context.Context, field graphql.CollectedField, obj *model.BugConnection) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "BugConnection"
 	rctx.Args = nil
@@ -428,7 +429,7 @@ func (ec *executionContext) _BugConnection_edges(ctx context.Context, field grap
 	return arr1
 }
 
-func (ec *executionContext) _BugConnection_pageInfo(ctx context.Context, field graphql.CollectedField, obj *BugConnection) graphql.Marshaler {
+func (ec *executionContext) _BugConnection_pageInfo(ctx context.Context, field graphql.CollectedField, obj *model.BugConnection) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "BugConnection"
 	rctx.Args = nil
@@ -439,7 +440,7 @@ func (ec *executionContext) _BugConnection_pageInfo(ctx context.Context, field g
 	return ec._PageInfo(ctx, field.Selections, &res)
 }
 
-func (ec *executionContext) _BugConnection_totalCount(ctx context.Context, field graphql.CollectedField, obj *BugConnection) graphql.Marshaler {
+func (ec *executionContext) _BugConnection_totalCount(ctx context.Context, field graphql.CollectedField, obj *model.BugConnection) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "BugConnection"
 	rctx.Args = nil
@@ -453,7 +454,7 @@ func (ec *executionContext) _BugConnection_totalCount(ctx context.Context, field
 var bugEdgeImplementors = []string{"BugEdge"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _BugEdge(ctx context.Context, sel []query.Selection, obj *BugEdge) graphql.Marshaler {
+func (ec *executionContext) _BugEdge(ctx context.Context, sel []query.Selection, obj *model.BugEdge) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, bugEdgeImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -475,7 +476,7 @@ func (ec *executionContext) _BugEdge(ctx context.Context, sel []query.Selection,
 	return out
 }
 
-func (ec *executionContext) _BugEdge_cursor(ctx context.Context, field graphql.CollectedField, obj *BugEdge) graphql.Marshaler {
+func (ec *executionContext) _BugEdge_cursor(ctx context.Context, field graphql.CollectedField, obj *model.BugEdge) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "BugEdge"
 	rctx.Args = nil
@@ -486,7 +487,7 @@ func (ec *executionContext) _BugEdge_cursor(ctx context.Context, field graphql.C
 	return graphql.MarshalString(res)
 }
 
-func (ec *executionContext) _BugEdge_node(ctx context.Context, field graphql.CollectedField, obj *BugEdge) graphql.Marshaler {
+func (ec *executionContext) _BugEdge_node(ctx context.Context, field graphql.CollectedField, obj *model.BugEdge) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "BugEdge"
 	rctx.Args = nil
@@ -500,7 +501,7 @@ func (ec *executionContext) _BugEdge_node(ctx context.Context, field graphql.Col
 var commentImplementors = []string{"Comment", "Authored"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _Comment(ctx context.Context, sel []query.Selection, obj *Comment) graphql.Marshaler {
+func (ec *executionContext) _Comment(ctx context.Context, sel []query.Selection, obj *model.Comment) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, commentImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -522,7 +523,7 @@ func (ec *executionContext) _Comment(ctx context.Context, sel []query.Selection,
 	return out
 }
 
-func (ec *executionContext) _Comment_author(ctx context.Context, field graphql.CollectedField, obj *Comment) graphql.Marshaler {
+func (ec *executionContext) _Comment_author(ctx context.Context, field graphql.CollectedField, obj *model.Comment) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "Comment"
 	rctx.Args = nil
@@ -533,7 +534,7 @@ func (ec *executionContext) _Comment_author(ctx context.Context, field graphql.C
 	return ec._Person(ctx, field.Selections, &res)
 }
 
-func (ec *executionContext) _Comment_message(ctx context.Context, field graphql.CollectedField, obj *Comment) graphql.Marshaler {
+func (ec *executionContext) _Comment_message(ctx context.Context, field graphql.CollectedField, obj *model.Comment) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "Comment"
 	rctx.Args = nil
@@ -547,7 +548,7 @@ func (ec *executionContext) _Comment_message(ctx context.Context, field graphql.
 var commentConnectionImplementors = []string{"CommentConnection"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _CommentConnection(ctx context.Context, sel []query.Selection, obj *CommentConnection) graphql.Marshaler {
+func (ec *executionContext) _CommentConnection(ctx context.Context, sel []query.Selection, obj *model.CommentConnection) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, commentConnectionImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -571,7 +572,7 @@ func (ec *executionContext) _CommentConnection(ctx context.Context, sel []query.
 	return out
 }
 
-func (ec *executionContext) _CommentConnection_edges(ctx context.Context, field graphql.CollectedField, obj *CommentConnection) graphql.Marshaler {
+func (ec *executionContext) _CommentConnection_edges(ctx context.Context, field graphql.CollectedField, obj *model.CommentConnection) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "CommentConnection"
 	rctx.Args = nil
@@ -591,7 +592,7 @@ func (ec *executionContext) _CommentConnection_edges(ctx context.Context, field 
 	return arr1
 }
 
-func (ec *executionContext) _CommentConnection_pageInfo(ctx context.Context, field graphql.CollectedField, obj *CommentConnection) graphql.Marshaler {
+func (ec *executionContext) _CommentConnection_pageInfo(ctx context.Context, field graphql.CollectedField, obj *model.CommentConnection) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "CommentConnection"
 	rctx.Args = nil
@@ -602,7 +603,7 @@ func (ec *executionContext) _CommentConnection_pageInfo(ctx context.Context, fie
 	return ec._PageInfo(ctx, field.Selections, &res)
 }
 
-func (ec *executionContext) _CommentConnection_totalCount(ctx context.Context, field graphql.CollectedField, obj *CommentConnection) graphql.Marshaler {
+func (ec *executionContext) _CommentConnection_totalCount(ctx context.Context, field graphql.CollectedField, obj *model.CommentConnection) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "CommentConnection"
 	rctx.Args = nil
@@ -616,7 +617,7 @@ func (ec *executionContext) _CommentConnection_totalCount(ctx context.Context, f
 var commentEdgeImplementors = []string{"CommentEdge"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _CommentEdge(ctx context.Context, sel []query.Selection, obj *CommentEdge) graphql.Marshaler {
+func (ec *executionContext) _CommentEdge(ctx context.Context, sel []query.Selection, obj *model.CommentEdge) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, commentEdgeImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -638,7 +639,7 @@ func (ec *executionContext) _CommentEdge(ctx context.Context, sel []query.Select
 	return out
 }
 
-func (ec *executionContext) _CommentEdge_cursor(ctx context.Context, field graphql.CollectedField, obj *CommentEdge) graphql.Marshaler {
+func (ec *executionContext) _CommentEdge_cursor(ctx context.Context, field graphql.CollectedField, obj *model.CommentEdge) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "CommentEdge"
 	rctx.Args = nil
@@ -649,7 +650,7 @@ func (ec *executionContext) _CommentEdge_cursor(ctx context.Context, field graph
 	return graphql.MarshalString(res)
 }
 
-func (ec *executionContext) _CommentEdge_node(ctx context.Context, field graphql.CollectedField, obj *CommentEdge) graphql.Marshaler {
+func (ec *executionContext) _CommentEdge_node(ctx context.Context, field graphql.CollectedField, obj *model.CommentEdge) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "CommentEdge"
 	rctx.Args = nil
@@ -663,7 +664,7 @@ func (ec *executionContext) _CommentEdge_node(ctx context.Context, field graphql
 var createOperationImplementors = []string{"CreateOperation", "Operation", "Authored"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _CreateOperation(ctx context.Context, sel []query.Selection, obj *CreateOperation) graphql.Marshaler {
+func (ec *executionContext) _CreateOperation(ctx context.Context, sel []query.Selection, obj *model.CreateOperation) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, createOperationImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -689,7 +690,7 @@ func (ec *executionContext) _CreateOperation(ctx context.Context, sel []query.Se
 	return out
 }
 
-func (ec *executionContext) _CreateOperation_author(ctx context.Context, field graphql.CollectedField, obj *CreateOperation) graphql.Marshaler {
+func (ec *executionContext) _CreateOperation_author(ctx context.Context, field graphql.CollectedField, obj *model.CreateOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "CreateOperation"
 	rctx.Args = nil
@@ -700,7 +701,7 @@ func (ec *executionContext) _CreateOperation_author(ctx context.Context, field g
 	return ec._Person(ctx, field.Selections, &res)
 }
 
-func (ec *executionContext) _CreateOperation_date(ctx context.Context, field graphql.CollectedField, obj *CreateOperation) graphql.Marshaler {
+func (ec *executionContext) _CreateOperation_date(ctx context.Context, field graphql.CollectedField, obj *model.CreateOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "CreateOperation"
 	rctx.Args = nil
@@ -711,7 +712,7 @@ func (ec *executionContext) _CreateOperation_date(ctx context.Context, field gra
 	return graphql.MarshalTime(res)
 }
 
-func (ec *executionContext) _CreateOperation_title(ctx context.Context, field graphql.CollectedField, obj *CreateOperation) graphql.Marshaler {
+func (ec *executionContext) _CreateOperation_title(ctx context.Context, field graphql.CollectedField, obj *model.CreateOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "CreateOperation"
 	rctx.Args = nil
@@ -722,7 +723,7 @@ func (ec *executionContext) _CreateOperation_title(ctx context.Context, field gr
 	return graphql.MarshalString(res)
 }
 
-func (ec *executionContext) _CreateOperation_message(ctx context.Context, field graphql.CollectedField, obj *CreateOperation) graphql.Marshaler {
+func (ec *executionContext) _CreateOperation_message(ctx context.Context, field graphql.CollectedField, obj *model.CreateOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "CreateOperation"
 	rctx.Args = nil
@@ -736,7 +737,7 @@ func (ec *executionContext) _CreateOperation_message(ctx context.Context, field 
 var labelChangeOperationImplementors = []string{"LabelChangeOperation", "Operation", "Authored"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _LabelChangeOperation(ctx context.Context, sel []query.Selection, obj *LabelChangeOperation) graphql.Marshaler {
+func (ec *executionContext) _LabelChangeOperation(ctx context.Context, sel []query.Selection, obj *model.LabelChangeOperation) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, labelChangeOperationImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -762,7 +763,7 @@ func (ec *executionContext) _LabelChangeOperation(ctx context.Context, sel []que
 	return out
 }
 
-func (ec *executionContext) _LabelChangeOperation_author(ctx context.Context, field graphql.CollectedField, obj *LabelChangeOperation) graphql.Marshaler {
+func (ec *executionContext) _LabelChangeOperation_author(ctx context.Context, field graphql.CollectedField, obj *model.LabelChangeOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "LabelChangeOperation"
 	rctx.Args = nil
@@ -773,7 +774,7 @@ func (ec *executionContext) _LabelChangeOperation_author(ctx context.Context, fi
 	return ec._Person(ctx, field.Selections, &res)
 }
 
-func (ec *executionContext) _LabelChangeOperation_date(ctx context.Context, field graphql.CollectedField, obj *LabelChangeOperation) graphql.Marshaler {
+func (ec *executionContext) _LabelChangeOperation_date(ctx context.Context, field graphql.CollectedField, obj *model.LabelChangeOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "LabelChangeOperation"
 	rctx.Args = nil
@@ -784,7 +785,7 @@ func (ec *executionContext) _LabelChangeOperation_date(ctx context.Context, fiel
 	return graphql.MarshalTime(res)
 }
 
-func (ec *executionContext) _LabelChangeOperation_added(ctx context.Context, field graphql.CollectedField, obj *LabelChangeOperation) graphql.Marshaler {
+func (ec *executionContext) _LabelChangeOperation_added(ctx context.Context, field graphql.CollectedField, obj *model.LabelChangeOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "LabelChangeOperation"
 	rctx.Args = nil
@@ -804,7 +805,7 @@ func (ec *executionContext) _LabelChangeOperation_added(ctx context.Context, fie
 	return arr1
 }
 
-func (ec *executionContext) _LabelChangeOperation_removed(ctx context.Context, field graphql.CollectedField, obj *LabelChangeOperation) graphql.Marshaler {
+func (ec *executionContext) _LabelChangeOperation_removed(ctx context.Context, field graphql.CollectedField, obj *model.LabelChangeOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "LabelChangeOperation"
 	rctx.Args = nil
@@ -827,7 +828,7 @@ func (ec *executionContext) _LabelChangeOperation_removed(ctx context.Context, f
 var operationConnectionImplementors = []string{"OperationConnection"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _OperationConnection(ctx context.Context, sel []query.Selection, obj *OperationConnection) graphql.Marshaler {
+func (ec *executionContext) _OperationConnection(ctx context.Context, sel []query.Selection, obj *model.OperationConnection) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, operationConnectionImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -851,7 +852,7 @@ func (ec *executionContext) _OperationConnection(ctx context.Context, sel []quer
 	return out
 }
 
-func (ec *executionContext) _OperationConnection_edges(ctx context.Context, field graphql.CollectedField, obj *OperationConnection) graphql.Marshaler {
+func (ec *executionContext) _OperationConnection_edges(ctx context.Context, field graphql.CollectedField, obj *model.OperationConnection) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "OperationConnection"
 	rctx.Args = nil
@@ -871,7 +872,7 @@ func (ec *executionContext) _OperationConnection_edges(ctx context.Context, fiel
 	return arr1
 }
 
-func (ec *executionContext) _OperationConnection_pageInfo(ctx context.Context, field graphql.CollectedField, obj *OperationConnection) graphql.Marshaler {
+func (ec *executionContext) _OperationConnection_pageInfo(ctx context.Context, field graphql.CollectedField, obj *model.OperationConnection) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "OperationConnection"
 	rctx.Args = nil
@@ -882,7 +883,7 @@ func (ec *executionContext) _OperationConnection_pageInfo(ctx context.Context, f
 	return ec._PageInfo(ctx, field.Selections, &res)
 }
 
-func (ec *executionContext) _OperationConnection_totalCount(ctx context.Context, field graphql.CollectedField, obj *OperationConnection) graphql.Marshaler {
+func (ec *executionContext) _OperationConnection_totalCount(ctx context.Context, field graphql.CollectedField, obj *model.OperationConnection) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "OperationConnection"
 	rctx.Args = nil
@@ -896,7 +897,7 @@ func (ec *executionContext) _OperationConnection_totalCount(ctx context.Context,
 var operationEdgeImplementors = []string{"OperationEdge"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _OperationEdge(ctx context.Context, sel []query.Selection, obj *OperationEdge) graphql.Marshaler {
+func (ec *executionContext) _OperationEdge(ctx context.Context, sel []query.Selection, obj *model.OperationEdge) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, operationEdgeImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -918,7 +919,7 @@ func (ec *executionContext) _OperationEdge(ctx context.Context, sel []query.Sele
 	return out
 }
 
-func (ec *executionContext) _OperationEdge_cursor(ctx context.Context, field graphql.CollectedField, obj *OperationEdge) graphql.Marshaler {
+func (ec *executionContext) _OperationEdge_cursor(ctx context.Context, field graphql.CollectedField, obj *model.OperationEdge) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "OperationEdge"
 	rctx.Args = nil
@@ -929,7 +930,7 @@ func (ec *executionContext) _OperationEdge_cursor(ctx context.Context, field gra
 	return graphql.MarshalString(res)
 }
 
-func (ec *executionContext) _OperationEdge_node(ctx context.Context, field graphql.CollectedField, obj *OperationEdge) graphql.Marshaler {
+func (ec *executionContext) _OperationEdge_node(ctx context.Context, field graphql.CollectedField, obj *model.OperationEdge) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "OperationEdge"
 	rctx.Args = nil
@@ -943,7 +944,7 @@ func (ec *executionContext) _OperationEdge_node(ctx context.Context, field graph
 var pageInfoImplementors = []string{"PageInfo"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _PageInfo(ctx context.Context, sel []query.Selection, obj *PageInfo) graphql.Marshaler {
+func (ec *executionContext) _PageInfo(ctx context.Context, sel []query.Selection, obj *model.PageInfo) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, pageInfoImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -965,7 +966,7 @@ func (ec *executionContext) _PageInfo(ctx context.Context, sel []query.Selection
 	return out
 }
 
-func (ec *executionContext) _PageInfo_hasNextPage(ctx context.Context, field graphql.CollectedField, obj *PageInfo) graphql.Marshaler {
+func (ec *executionContext) _PageInfo_hasNextPage(ctx context.Context, field graphql.CollectedField, obj *model.PageInfo) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "PageInfo"
 	rctx.Args = nil
@@ -976,7 +977,7 @@ func (ec *executionContext) _PageInfo_hasNextPage(ctx context.Context, field gra
 	return graphql.MarshalBoolean(res)
 }
 
-func (ec *executionContext) _PageInfo_hasPreviousPage(ctx context.Context, field graphql.CollectedField, obj *PageInfo) graphql.Marshaler {
+func (ec *executionContext) _PageInfo_hasPreviousPage(ctx context.Context, field graphql.CollectedField, obj *model.PageInfo) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "PageInfo"
 	rctx.Args = nil
@@ -990,7 +991,7 @@ func (ec *executionContext) _PageInfo_hasPreviousPage(ctx context.Context, field
 var personImplementors = []string{"Person"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _Person(ctx context.Context, sel []query.Selection, obj *Person) graphql.Marshaler {
+func (ec *executionContext) _Person(ctx context.Context, sel []query.Selection, obj *model.Person) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, personImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -1012,7 +1013,7 @@ func (ec *executionContext) _Person(ctx context.Context, sel []query.Selection, 
 	return out
 }
 
-func (ec *executionContext) _Person_email(ctx context.Context, field graphql.CollectedField, obj *Person) graphql.Marshaler {
+func (ec *executionContext) _Person_email(ctx context.Context, field graphql.CollectedField, obj *model.Person) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "Person"
 	rctx.Args = nil
@@ -1026,7 +1027,7 @@ func (ec *executionContext) _Person_email(ctx context.Context, field graphql.Col
 	return graphql.MarshalString(*res)
 }
 
-func (ec *executionContext) _Person_name(ctx context.Context, field graphql.CollectedField, obj *Person) graphql.Marshaler {
+func (ec *executionContext) _Person_name(ctx context.Context, field graphql.CollectedField, obj *model.Person) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "Person"
 	rctx.Args = nil
@@ -1098,7 +1099,7 @@ func (ec *executionContext) _Query_defaultRepository(ctx context.Context, field 
 		if resTmp == nil {
 			return graphql.Null
 		}
-		res := resTmp.(*Repository)
+		res := resTmp.(*model.Repository)
 		if res == nil {
 			return graphql.Null
 		}
@@ -1142,7 +1143,7 @@ func (ec *executionContext) _Query_repository(ctx context.Context, field graphql
 		if resTmp == nil {
 			return graphql.Null
 		}
-		res := resTmp.(*Repository)
+		res := resTmp.(*model.Repository)
 		if res == nil {
 			return graphql.Null
 		}
@@ -1192,7 +1193,7 @@ func (ec *executionContext) _Query___type(ctx context.Context, field graphql.Col
 var repositoryImplementors = []string{"Repository"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _Repository(ctx context.Context, sel []query.Selection, obj *Repository) graphql.Marshaler {
+func (ec *executionContext) _Repository(ctx context.Context, sel []query.Selection, obj *model.Repository) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, repositoryImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -1214,9 +1215,9 @@ func (ec *executionContext) _Repository(ctx context.Context, sel []query.Selecti
 	return out
 }
 
-func (ec *executionContext) _Repository_allBugs(ctx context.Context, field graphql.CollectedField, obj *Repository) graphql.Marshaler {
+func (ec *executionContext) _Repository_allBugs(ctx context.Context, field graphql.CollectedField, obj *model.Repository) graphql.Marshaler {
 	args := map[string]interface{}{}
-	var arg0 ConnectionInput
+	var arg0 model.ConnectionInput
 	if tmp, ok := field.Args["input"]; ok {
 		var err error
 		arg0, err = UnmarshalConnectionInput(tmp)
@@ -1241,7 +1242,7 @@ func (ec *executionContext) _Repository_allBugs(ctx context.Context, field graph
 		}()
 
 		resTmp, err := ec.ResolverMiddleware(ctx, func(ctx context.Context) (interface{}, error) {
-			return ec.resolvers.Repository_allBugs(ctx, obj, args["input"].(ConnectionInput))
+			return ec.resolvers.Repository_allBugs(ctx, obj, args["input"].(model.ConnectionInput))
 		})
 		if err != nil {
 			ec.Error(ctx, err)
@@ -1250,12 +1251,12 @@ func (ec *executionContext) _Repository_allBugs(ctx context.Context, field graph
 		if resTmp == nil {
 			return graphql.Null
 		}
-		res := resTmp.(BugConnection)
+		res := resTmp.(model.BugConnection)
 		return ec._BugConnection(ctx, field.Selections, &res)
 	})
 }
 
-func (ec *executionContext) _Repository_bug(ctx context.Context, field graphql.CollectedField, obj *Repository) graphql.Marshaler {
+func (ec *executionContext) _Repository_bug(ctx context.Context, field graphql.CollectedField, obj *model.Repository) graphql.Marshaler {
 	args := map[string]interface{}{}
 	var arg0 string
 	if tmp, ok := field.Args["prefix"]; ok {
@@ -1291,7 +1292,7 @@ func (ec *executionContext) _Repository_bug(ctx context.Context, field graphql.C
 		if resTmp == nil {
 			return graphql.Null
 		}
-		res := resTmp.(*Bug)
+		res := resTmp.(*model.Bug)
 		if res == nil {
 			return graphql.Null
 		}
@@ -1302,7 +1303,7 @@ func (ec *executionContext) _Repository_bug(ctx context.Context, field graphql.C
 var setStatusOperationImplementors = []string{"SetStatusOperation", "Operation", "Authored"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _SetStatusOperation(ctx context.Context, sel []query.Selection, obj *SetStatusOperation) graphql.Marshaler {
+func (ec *executionContext) _SetStatusOperation(ctx context.Context, sel []query.Selection, obj *model.SetStatusOperation) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, setStatusOperationImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -1326,7 +1327,7 @@ func (ec *executionContext) _SetStatusOperation(ctx context.Context, sel []query
 	return out
 }
 
-func (ec *executionContext) _SetStatusOperation_author(ctx context.Context, field graphql.CollectedField, obj *SetStatusOperation) graphql.Marshaler {
+func (ec *executionContext) _SetStatusOperation_author(ctx context.Context, field graphql.CollectedField, obj *model.SetStatusOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "SetStatusOperation"
 	rctx.Args = nil
@@ -1337,7 +1338,7 @@ func (ec *executionContext) _SetStatusOperation_author(ctx context.Context, fiel
 	return ec._Person(ctx, field.Selections, &res)
 }
 
-func (ec *executionContext) _SetStatusOperation_date(ctx context.Context, field graphql.CollectedField, obj *SetStatusOperation) graphql.Marshaler {
+func (ec *executionContext) _SetStatusOperation_date(ctx context.Context, field graphql.CollectedField, obj *model.SetStatusOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "SetStatusOperation"
 	rctx.Args = nil
@@ -1348,7 +1349,7 @@ func (ec *executionContext) _SetStatusOperation_date(ctx context.Context, field 
 	return graphql.MarshalTime(res)
 }
 
-func (ec *executionContext) _SetStatusOperation_status(ctx context.Context, field graphql.CollectedField, obj *SetStatusOperation) graphql.Marshaler {
+func (ec *executionContext) _SetStatusOperation_status(ctx context.Context, field graphql.CollectedField, obj *model.SetStatusOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "SetStatusOperation"
 	rctx.Args = nil
@@ -1362,7 +1363,7 @@ func (ec *executionContext) _SetStatusOperation_status(ctx context.Context, fiel
 var setTitleOperationImplementors = []string{"SetTitleOperation", "Operation", "Authored"}
 
 // nolint: gocyclo, errcheck, gas, goconst
-func (ec *executionContext) _SetTitleOperation(ctx context.Context, sel []query.Selection, obj *SetTitleOperation) graphql.Marshaler {
+func (ec *executionContext) _SetTitleOperation(ctx context.Context, sel []query.Selection, obj *model.SetTitleOperation) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.Doc, sel, setTitleOperationImplementors, ec.Variables)
 
 	out := graphql.NewOrderedMap(len(fields))
@@ -1386,7 +1387,7 @@ func (ec *executionContext) _SetTitleOperation(ctx context.Context, sel []query.
 	return out
 }
 
-func (ec *executionContext) _SetTitleOperation_author(ctx context.Context, field graphql.CollectedField, obj *SetTitleOperation) graphql.Marshaler {
+func (ec *executionContext) _SetTitleOperation_author(ctx context.Context, field graphql.CollectedField, obj *model.SetTitleOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "SetTitleOperation"
 	rctx.Args = nil
@@ -1397,7 +1398,7 @@ func (ec *executionContext) _SetTitleOperation_author(ctx context.Context, field
 	return ec._Person(ctx, field.Selections, &res)
 }
 
-func (ec *executionContext) _SetTitleOperation_date(ctx context.Context, field graphql.CollectedField, obj *SetTitleOperation) graphql.Marshaler {
+func (ec *executionContext) _SetTitleOperation_date(ctx context.Context, field graphql.CollectedField, obj *model.SetTitleOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "SetTitleOperation"
 	rctx.Args = nil
@@ -1408,7 +1409,7 @@ func (ec *executionContext) _SetTitleOperation_date(ctx context.Context, field g
 	return graphql.MarshalTime(res)
 }
 
-func (ec *executionContext) _SetTitleOperation_title(ctx context.Context, field graphql.CollectedField, obj *SetTitleOperation) graphql.Marshaler {
+func (ec *executionContext) _SetTitleOperation_title(ctx context.Context, field graphql.CollectedField, obj *model.SetTitleOperation) graphql.Marshaler {
 	rctx := graphql.GetResolverContext(ctx)
 	rctx.Object = "SetTitleOperation"
 	rctx.Args = nil
@@ -2289,99 +2290,99 @@ func (ec *executionContext) ___Type_ofType(ctx context.Context, field graphql.Co
 	return ec.___Type(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Authored(ctx context.Context, sel []query.Selection, obj *Authored) graphql.Marshaler {
+func (ec *executionContext) _Authored(ctx context.Context, sel []query.Selection, obj *model.Authored) graphql.Marshaler {
 	switch obj := (*obj).(type) {
 	case nil:
 		return graphql.Null
-	case Comment:
+	case model.Comment:
 		return ec._Comment(ctx, sel, &obj)
-	case *Comment:
+	case *model.Comment:
 		return ec._Comment(ctx, sel, obj)
-	case CreateOperation:
+	case model.CreateOperation:
 		return ec._CreateOperation(ctx, sel, &obj)
-	case *CreateOperation:
+	case *model.CreateOperation:
 		return ec._CreateOperation(ctx, sel, obj)
-	case SetTitleOperation:
+	case model.SetTitleOperation:
 		return ec._SetTitleOperation(ctx, sel, &obj)
-	case *SetTitleOperation:
+	case *model.SetTitleOperation:
 		return ec._SetTitleOperation(ctx, sel, obj)
-	case AddCommentOperation:
+	case model.AddCommentOperation:
 		return ec._AddCommentOperation(ctx, sel, &obj)
-	case *AddCommentOperation:
+	case *model.AddCommentOperation:
 		return ec._AddCommentOperation(ctx, sel, obj)
-	case SetStatusOperation:
+	case model.SetStatusOperation:
 		return ec._SetStatusOperation(ctx, sel, &obj)
-	case *SetStatusOperation:
+	case *model.SetStatusOperation:
 		return ec._SetStatusOperation(ctx, sel, obj)
-	case LabelChangeOperation:
+	case model.LabelChangeOperation:
 		return ec._LabelChangeOperation(ctx, sel, &obj)
-	case *LabelChangeOperation:
+	case *model.LabelChangeOperation:
 		return ec._LabelChangeOperation(ctx, sel, obj)
 	default:
 		panic(fmt.Errorf("unexpected type %T", obj))
 	}
 }
 
-func (ec *executionContext) _Operation(ctx context.Context, sel []query.Selection, obj *Operation) graphql.Marshaler {
+func (ec *executionContext) _Operation(ctx context.Context, sel []query.Selection, obj *model.Operation) graphql.Marshaler {
 	switch obj := (*obj).(type) {
 	case nil:
 		return graphql.Null
-	case CreateOperation:
+	case model.CreateOperation:
 		return ec._CreateOperation(ctx, sel, &obj)
-	case *CreateOperation:
+	case *model.CreateOperation:
 		return ec._CreateOperation(ctx, sel, obj)
-	case SetTitleOperation:
+	case model.SetTitleOperation:
 		return ec._SetTitleOperation(ctx, sel, &obj)
-	case *SetTitleOperation:
+	case *model.SetTitleOperation:
 		return ec._SetTitleOperation(ctx, sel, obj)
-	case AddCommentOperation:
+	case model.AddCommentOperation:
 		return ec._AddCommentOperation(ctx, sel, &obj)
-	case *AddCommentOperation:
+	case *model.AddCommentOperation:
 		return ec._AddCommentOperation(ctx, sel, obj)
-	case SetStatusOperation:
+	case model.SetStatusOperation:
 		return ec._SetStatusOperation(ctx, sel, &obj)
-	case *SetStatusOperation:
+	case *model.SetStatusOperation:
 		return ec._SetStatusOperation(ctx, sel, obj)
-	case LabelChangeOperation:
+	case model.LabelChangeOperation:
 		return ec._LabelChangeOperation(ctx, sel, &obj)
-	case *LabelChangeOperation:
+	case *model.LabelChangeOperation:
 		return ec._LabelChangeOperation(ctx, sel, obj)
 	default:
 		panic(fmt.Errorf("unexpected type %T", obj))
 	}
 }
 
-func (ec *executionContext) _OperationUnion(ctx context.Context, sel []query.Selection, obj *OperationUnion) graphql.Marshaler {
+func (ec *executionContext) _OperationUnion(ctx context.Context, sel []query.Selection, obj *model.OperationUnion) graphql.Marshaler {
 	switch obj := (*obj).(type) {
 	case nil:
 		return graphql.Null
-	case CreateOperation:
+	case model.CreateOperation:
 		return ec._CreateOperation(ctx, sel, &obj)
-	case *CreateOperation:
+	case *model.CreateOperation:
 		return ec._CreateOperation(ctx, sel, obj)
-	case SetTitleOperation:
+	case model.SetTitleOperation:
 		return ec._SetTitleOperation(ctx, sel, &obj)
-	case *SetTitleOperation:
+	case *model.SetTitleOperation:
 		return ec._SetTitleOperation(ctx, sel, obj)
-	case AddCommentOperation:
+	case model.AddCommentOperation:
 		return ec._AddCommentOperation(ctx, sel, &obj)
-	case *AddCommentOperation:
+	case *model.AddCommentOperation:
 		return ec._AddCommentOperation(ctx, sel, obj)
-	case SetStatusOperation:
+	case model.SetStatusOperation:
 		return ec._SetStatusOperation(ctx, sel, &obj)
-	case *SetStatusOperation:
+	case *model.SetStatusOperation:
 		return ec._SetStatusOperation(ctx, sel, obj)
-	case LabelChangeOperation:
+	case model.LabelChangeOperation:
 		return ec._LabelChangeOperation(ctx, sel, &obj)
-	case *LabelChangeOperation:
+	case *model.LabelChangeOperation:
 		return ec._LabelChangeOperation(ctx, sel, obj)
 	default:
 		panic(fmt.Errorf("unexpected type %T", obj))
 	}
 }
 
-func UnmarshalConnectionInput(v interface{}) (ConnectionInput, error) {
-	var it ConnectionInput
+func UnmarshalConnectionInput(v interface{}) (model.ConnectionInput, error) {
+	var it model.ConnectionInput
 	var asMap = v.(map[string]interface{})
 
 	for k, v := range asMap {

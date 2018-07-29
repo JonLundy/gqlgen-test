@@ -2,7 +2,7 @@ schema: schema.graphql
 exec:
   filename: graph/generated_graph.go
 model:
-  filename: graph/generated_model.go
+  filename: model/generated_model.go
 
 models:
   Repository:
