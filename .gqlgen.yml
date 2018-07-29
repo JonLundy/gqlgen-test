@@ -1,0 +1,32 @@
+schema: schema.graphql
+exec:
+  filename: resolvers/generated_graph.go
+model:
+  filename: resolvers/generated_model.go
+
+models:
+  Repository:
+    fields:
+        bug:
+          resolver: true
+        allBugs:
+          resolver: true
+#    model: github.com/MichaelMure/git-bug/graphql2/resolvers.repoResolver
+  Bug:
+    model: github.com/MichaelMure/git-bug/bug.Snapshot
+  Comment:
+    model: github.com/MichaelMure/git-bug/bug.Comment
+  Person:
+    model: github.com/MichaelMure/git-bug/bug.Person
+  Label:
+    model: github.com/MichaelMure/git-bug/bug.Label
+  CreateOperation:
+    model: github.com/MichaelMure/git-bug/bug/operations.CreateOperation
+  SetTitleOperation:
+    model: github.com/MichaelMure/git-bug/bug/operations.SetTitleOperation
+  AddCommentOperation:
+    model: github.com/MichaelMure/git-bug/bug/operations.AddCommentOperation
+  SetStatusOperation:
+    model: github.com/MichaelMure/git-bug/bug/operations.SetStatusOperation
+  LabelChangeOperation:
+    model: github.com/MichaelMure/git-bug/bug/operations.LabelChangeOperation
